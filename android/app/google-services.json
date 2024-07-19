@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "29303372161",
+    "project_id": "chate-app-55943",
+    "storage_bucket": "chate-app-55943.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:29303372161:android:535754a5219c01d6ebd080",
+        "android_client_info": {
+          "package_name": "com.example.chat_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBenqXlSEFxNvOh5U5Fn0Dq0bCtxBwqpDY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
