@@ -1,6 +1,7 @@
 import 'package:chat_app/screens/Widgets/chat_tile.dart';
 import 'package:chat_app/screens/chat_provider.dart';
 import 'package:chat_app/screens/login_screen.dart';
+import 'package:chat_app/screens/search_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -105,7 +106,15 @@ class _HomeScreenState extends State<HomeScreen> {
             ))
           ],
         ),
-        floatingActionButton: FloatingActionButton(onPressed: (){},tooltip: "Ali",),
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.blue,
+          foregroundColor: Colors.white,
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => SearchScreen()));
+          },
+          child: Icon(Icons.search),
+        ),
       ),
     );
   }

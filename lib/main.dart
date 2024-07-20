@@ -1,11 +1,12 @@
+import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart'; // Add Firebase Auth import
 import 'package:chat_app/screens/auth_provider.dart';
 import 'package:chat_app/screens/auth_screen.dart';
 import 'package:chat_app/screens/chat_provider.dart';
 import 'package:chat_app/screens/home_screen.dart';
 import 'package:chat_app/screens/login_screen.dart';
-import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,16 +15,13 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (_) => AuthProviders(),
-        ),
+        ChangeNotifierProvider(create: (_) => AuthProviders()),
         ChangeNotifierProvider(create: (_) => ChatProvider()),
       ],
       child: MaterialApp(
@@ -35,21 +33,28 @@ class MyApp extends StatelessWidget {
 }
 
 class AuthenticationWithWrapper extends StatefulWidget {
-  const AuthenticationWithWrapper({super.key});
+  const AuthenticationWithWrapper({Key? key});
 
   @override
-  State<AuthenticationWithWrapper> createState() => _MyWidgetState();
+  _AuthenticationWithWrapperState createState() =>
+      _AuthenticationWithWrapperState();
 }
 
-class _MyWidgetState extends State<AuthenticationWithWrapper> {
+class _AuthenticationWithWrapperState extends State<AuthenticationWithWrapper> {
+  // Initialize FirebaseAuth instance
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
-    return Consumer<AuthProviders>(
-      builder: (context, authProviders, child) {
-        if (authProviders==null) {
-          return HomeScreen();
+    return StreamBuilder<User?>(
+      stream: _auth.authStateChanges(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator(); // Or another loading indicator
+        } else if (snapshot.hasData) {
+          return HomeScreen(); // User is signed in
         } else {
-          return LoginScreen();
+          return LoginScreen(); // User is not signed in
         }
       },
     );
